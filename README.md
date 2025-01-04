@@ -2,9 +2,9 @@
 
 A new Flutter project.
 
-# Run Project
+## Run Project
 
-flutter run
+- flutter run
 
 ## Getting Started
 
