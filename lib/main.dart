@@ -3,7 +3,8 @@ import 'screens/calendar_screen.dart';
 import 'screens/add_exam_screen.dart';
 import 'screens/map_screen.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 

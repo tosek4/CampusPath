@@ -5,6 +5,16 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+def dartDefines = [:]
+if (project.hasProperty('dart-defines')) {
+    dartDefines = dartDefines + project.property('dart-defines')
+            .split(',')
+            .collectEntries { entry ->
+                def pair = new String(entry.decodeBase64(), 'UTF-8').split('=')
+                pair.length == 2 ? [(pair.first()): pair.last()] : [:]
+            }
+}
+
 android {
     namespace = "com.example.campus_path"
     compileSdk = flutter.compileSdkVersion
@@ -28,6 +38,12 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        // Check if the dart define exists before passing it to resValue
+        if (dartDefines.containsKey('GOOGLE_MAPS_API_KEY')) {
+            resValue "string", "google_maps_api_key", dartDefines['GOOGLE_MAPS_API_KEY']
+        } else {
+            resValue "string", "google_maps_api_key", "default_api_key"
+        }   
     }
 
     buildTypes {
